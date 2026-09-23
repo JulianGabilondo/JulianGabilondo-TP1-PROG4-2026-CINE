@@ -1,0 +1,170 @@
+// ============================================================
+// HOME
+// Hero con "tira de fotogramas" (referencia directa a un film strip,
+// no un carrusel genérico) + cartelera completa abajo.
+// ============================================================
+
+.hero {
+  padding: 3rem 2rem 2.5rem;
+  border-bottom: 1px solid var(--color-borde);
+}
+
+.hero-contenido {
+  max-width: 640px;
+  margin-bottom: 2.5rem;
+}
+
+.hero-kicker {
+  display: block;
+  color: var(--color-acento);
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 0.6rem;
+  // Nota: nada de tracked-out uppercase acá — es un dato (qué sección es),
+  // no una etiqueta decorativa, así que se lee en formato oración normal.
+}
+
+.hero-bajada {
+  color: var(--color-texto-tenue);
+  font-size: 1.05rem;
+}
+
+// La "tira de fotogramas": tres posters grandes con un borde dentado sutil
+// arriba/abajo que evoca la perforación de una tira de película de 35mm
+.tira-destacadas {
+  display: flex;
+  gap: 1.5rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+}
+
+.fotograma {
+  position: relative;
+  flex: 0 0 auto;
+  width: 220px;
+  border-radius: var(--radio-medio);
+  overflow: hidden;
+  background: var(--color-fondo-superficie);
+  border: 1px solid var(--color-borde);
+  color: inherit;
+
+  &:hover {
+    text-decoration: none;
+
+    img {
+      transform: scale(1.03);
+    }
+  }
+
+  img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+    transition: transform 0.25s ease;
+  }
+}
+
+.dato-fotograma {
+  padding: 0.9rem 1rem 1.1rem;
+
+  h3 {
+    font-size: 1.05rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .formato {
+    font-size: 0.75rem;
+    color: var(--color-acento);
+    font-weight: 600;
+  }
+}
+
+.buscador {
+  display: flex;
+  gap: 0.75rem;
+  padding: 1.5rem 2rem;
+  flex-wrap: wrap;
+
+  input {
+    flex: 1;
+    min-width: 220px;
+  }
+}
+
+.catalogo {
+  padding: 1rem 2rem var(--espacio-seccion);
+
+  h2 {
+    margin-bottom: 1.5rem;
+  }
+}
+
+.sin-resultados {
+  color: var(--color-texto-tenue);
+}
+
+.grid-catalogo {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 1.5rem;
+}
+
+.poster {
+  color: inherit;
+  border-radius: var(--radio-medio);
+  overflow: hidden;
+  background: var(--color-fondo-superficie);
+  border: 1px solid var(--color-borde);
+
+  &:hover {
+    text-decoration: none;
+    border-color: var(--color-acento);
+  }
+
+  img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+  }
+}
+
+.dato-poster {
+  padding: 0.75rem 0.85rem;
+
+  h4 {
+    font-size: 0.95rem;
+    margin-bottom: 0.4rem;
+    // Recorta títulos largos a 2 líneas en vez de desbordar la card
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+.meta-poster {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: var(--color-texto-tenue);
+
+  .formato {
+    color: var(--color-acento);
+    font-weight: 600;
+  }
+
+  .rating {
+    color: var(--color-verde-butaca);
+  }
+}
+
+// Mobile: la tira de destacadas se desliza horizontal (ya lo hace por overflow-x),
+// pero achicamos el padding general para no perder espacio útil en pantallas chicas
+@media (max-width: 640px) {
+  .hero, .buscador, .catalogo {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+}

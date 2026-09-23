@@ -1,0 +1,82 @@
+<h1>Administrar funciones</h1>
+
+<form [formGroup]="form" (ngSubmit)="guardar()" class="form-admin">
+  <label class="campo-ancho">
+    Película
+    <select formControlName="peliculaId">
+      <option [ngValue]="null">Elegí una película</option>
+      @for (peli of peliculas(); track peli.id) {
+        <option [ngValue]="peli.id">{{ peli.titulo }} ({{ peli.duracion_minutos }} min)</option>
+      }
+    </select>
+  </label>
+
+  <label>
+    Fecha
+    <input type="date" formControlName="fecha">
+  </label>
+
+  <label>
+    Hora de inicio
+    <input type="time" formControlName="horaInicio">
+  </label>
+
+  <label>
+    Precio base
+    <input type="number" formControlName="precioBase">
+  </label>
+
+  <label>
+    Precio VIP
+    <input type="number" formControlName="precioVip">
+  </label>
+
+  @if (peliculaSeleccionada()) {
+    <p class="ayuda campo-ancho">
+      Duración: {{ peliculaSeleccionada()!.duracion_minutos }} min + 30 min de margen. La sala se asigna automáticamente entre las disponibles en ese horario.
+    </p>
+  }
+
+  @if (error()) {
+    <p class="error-form campo-ancho">{{ error() }}</p>
+  }
+  @if (exito()) {
+    <p class="exito-form campo-ancho">{{ exito() }}</p>
+  }
+
+  <div class="acciones-form">
+    <button type="submit" [disabled]="guardando()">
+      {{ guardando() ? 'Creando...' : 'Crear función' }}
+    </button>
+  </div>
+</form>
+
+<h2>Funciones programadas</h2>
+<p class="ayuda">Salas disponibles en el cine: {{ salas().length }}</p>
+
+<table class="tabla-admin">
+  <thead>
+    <tr>
+      <th>Película</th>
+      <th>Sala</th>
+      <th>Fecha</th>
+      <th>Horario</th>
+      <th>Precio base</th>
+      <th>Precio VIP</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (funcion of funciones(); track funcion.id) {
+      <tr>
+        <td>{{ funcion.pelicula_titulo }}</td>
+        <td>{{ funcion.sala_nombre }}</td>
+        <td>{{ funcion.fecha }}</td>
+        <td>{{ funcion.hora_inicio }} — {{ funcion.hora_fin }}</td>
+        <td>${{ funcion.precio_base }}</td>
+        <td>${{ funcion.precio_vip }}</td>
+      </tr>
+    } @empty {
+      <tr><td colspan="6">No hay funciones programadas todavía.</td></tr>
+    }
+  </tbody>
+</table>

@@ -1,0 +1,60 @@
+<h1>Candy bar</h1>
+
+@if (error()) {
+  <p class="error">{{ error() }}</p>
+}
+
+<section>
+  <h2>Nueva categoría</h2>
+  <form [formGroup]="formCategoria" (ngSubmit)="guardarCategoria()">
+    <input type="text" formControlName="nombre" placeholder="Ej: Bebidas">
+    <button type="submit">Crear</button>
+  </form>
+</section>
+
+<section>
+  <h2>Nuevo producto</h2>
+  <form [formGroup]="formProducto" (ngSubmit)="guardarProducto()">
+    <input type="text" formControlName="nombre" placeholder="Nombre">
+    <input type="number" formControlName="precio" placeholder="Precio">
+    <select formControlName="categoriaId">
+      <option [ngValue]="null">Categoría</option>
+      @for (cat of categorias(); track cat.id) {
+        <option [ngValue]="cat.id">{{ cat.nombre }}</option>
+      }
+    </select>
+    <input type="number" formControlName="puntosCanje" placeholder="Puntos para canjear (opcional)">
+    <button type="submit">Crear</button>
+  </form>
+</section>
+
+<section>
+  <h2>Nuevo combo</h2>
+  <form [formGroup]="formCombo" (ngSubmit)="guardarCombo()">
+    <input type="text" formControlName="nombre" placeholder="Ej: Combo Pareja">
+    <input type="number" formControlName="precioFijo" placeholder="Precio fijo">
+    <button type="submit">Crear</button>
+  </form>
+</section>
+
+<section>
+  <h2>Productos cargados</h2>
+  <ul>
+    @for (p of productos(); track p.id) {
+      <li>{{ p.nombre }} — ${{ p.precio }}</li>
+    } @empty {
+      <li>Sin productos todavía.</li>
+    }
+  </ul>
+</section>
+
+<section>
+  <h2>Combos cargados</h2>
+  <ul>
+    @for (c of combos(); track c.id) {
+      <li>{{ c.nombre }} — ${{ c.precio_fijo }}</li>
+    } @empty {
+      <li>Sin combos todavía.</li>
+    }
+  </ul>
+</section>

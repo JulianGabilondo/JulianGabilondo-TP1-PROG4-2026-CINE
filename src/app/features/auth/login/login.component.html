@@ -1,0 +1,25 @@
+<div class="login">
+  <h1>Iniciar sesión</h1>
+
+  <label>
+    Email
+    <input type="email" [(ngModel)]="email">
+  </label>
+
+  <label>
+    Contraseña
+    <input type="password" [(ngModel)]="password">
+  </label>
+
+  @if (error()) {
+    <p class="error">{{ error() }}</p>
+  }
+
+  <button (click)="ingresar()" [disabled]="cargando()">
+    {{ cargando() ? 'Ingresando...' : 'Ingresar' }}
+  </button>
+
+  <p class="link-registro">
+    ¿No tenés cuenta? <a routerLink="/registro">Registrate</a>
+  </p>
+</div>

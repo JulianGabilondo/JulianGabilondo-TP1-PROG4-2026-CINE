@@ -1,0 +1,37 @@
+<div class="leyenda">
+  <span class="item"><span class="chip libre"></span> Libre</span>
+  <span class="item"><span class="chip mia"></span> Tu selección</span>
+  <span class="item"><span class="chip reservada"></span> Ocupada</span>
+  <span class="item"><span class="chip vip"></span> VIP</span>
+  <span class="item"><span class="chip accesible"></span> Accesible</span>
+</div>
+
+<div class="pantalla">PANTALLA</div>
+
+<div class="mapa">
+  @for (fila of filasAgrupadas() | keyvalue; track fila.key) {
+    <div class="fila">
+      <span class="letra-fila">{{ fila.key }}</span>
+
+      @for (butaca of fila.value; track butaca.id) {
+        <button
+          class="butaca"
+          [class.libre]="butaca.estado === 'libre' && butaca.tipo === 'normal'"
+          [class.mia]="butaca.estado === 'mia'"
+          [class.reservada]="butaca.estado === 'reservada' || butaca.estado === 'vendida'"
+          [class.vip]="butaca.tipo === 'vip' && butaca.estado !== 'mia'"
+          [class.accesible]="butaca.tipo === 'accesible' && butaca.estado !== 'mia'"
+          [disabled]="butaca.estado === 'reservada' || butaca.estado === 'vendida'"
+          [title]="butaca.fila + butaca.numero"
+          (click)="onClickButaca(butaca)"
+        >
+          {{ butaca.numero }}
+        </button>
+      }
+    </div>
+  }
+</div>
+
+<div class="resumen-seleccion">
+  <strong>Total: ${{ totalSeleccion() }}</strong>
+</div>

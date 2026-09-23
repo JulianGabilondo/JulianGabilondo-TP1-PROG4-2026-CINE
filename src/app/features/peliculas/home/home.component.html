@@ -1,0 +1,59 @@
+<header class="hero">
+  <div class="hero-contenido">
+    <span class="hero-kicker">En cartelera esta semana</span>
+    <h1>Lo que se está viendo ahora</h1>
+    <p class="hero-bajada">Elegí función, sala y butaca — y llevá tu entrada lista antes de salir de casa.</p>
+  </div>
+
+  <div class="tira-destacadas">
+    @for (peli of top3(); track peli.id) {
+      <a [routerLink]="['/pelicula', peli.id]" class="fotograma">
+        <img [src]="peli.imagen_url" [alt]="peli.titulo">
+        <div class="dato-fotograma">
+          <h3>{{ peli.titulo }}</h3>
+          <span class="formato">{{ peli.formato.toUpperCase() }}</span>
+        </div>
+      </a>
+    }
+  </div>
+</header>
+
+<section class="buscador">
+  <input
+    type="text"
+    placeholder="Buscar por título..."
+    [(ngModel)]="busqueda"
+  >
+
+  <select [(ngModel)]="generoSeleccionado">
+    <option [ngValue]="null">Todos los géneros</option>
+    @for (genero of generosDisponibles(); track genero) {
+      <option [ngValue]="genero">{{ genero }}</option>
+    }
+  </select>
+</section>
+
+<section class="catalogo">
+  <h2>Toda la cartelera</h2>
+
+  @if (resultados().length === 0) {
+    <p class="sin-resultados">No encontramos películas con ese criterio.</p>
+  } @else {
+    <div class="grid-catalogo">
+      @for (peli of resultados(); track peli.id) {
+        <a [routerLink]="['/pelicula', peli.id]" class="poster">
+          <img [src]="peli.imagen_url" [alt]="peli.titulo">
+          <div class="dato-poster">
+            <h4>{{ peli.titulo }}</h4>
+            <div class="meta-poster">
+              <span class="formato">{{ peli.formato.toUpperCase() }}</span>
+              @if (peli.promedio_estrellas) {
+                <span class="rating">{{ peli.promedio_estrellas }} ★</span>
+              }
+            </div>
+          </div>
+        </a>
+      }
+    </div>
+  }
+</section>

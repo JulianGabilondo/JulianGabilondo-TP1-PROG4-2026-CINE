@@ -1,0 +1,74 @@
+<div class="registro">
+  <h1>Crear cuenta</h1>
+
+  @if (requiereConfirmacion()) {
+    <p class="exito-form">
+      ¡Cuenta creada! Revisá tu correo para confirmar la dirección antes de iniciar sesión.
+    </p>
+  } @else {
+    <form [formGroup]="form" (ngSubmit)="registrarse()">
+      <label>
+        Email
+        <input type="email" formControlName="email">
+        @if (errorDe('email'); as msg) {
+          <span class="error-campo">{{ msg }}</span>
+        }
+      </label>
+
+      <label>
+        Contraseña
+        <input type="password" formControlName="password">
+        @if (errorDe('password'); as msg) {
+          <span class="error-campo">{{ msg }}</span>
+        }
+      </label>
+
+      <label>
+        Nombre
+        <input type="text" formControlName="nombre">
+        @if (errorDe('nombre'); as msg) {
+          <span class="error-campo">{{ msg }}</span>
+        }
+      </label>
+
+      <label>
+        Apellido
+        <input type="text" formControlName="apellido">
+        @if (errorDe('apellido'); as msg) {
+          <span class="error-campo">{{ msg }}</span>
+        }
+      </label>
+
+      <label>
+        Fecha de nacimiento
+        <input type="date" formControlName="fecha_nacimiento">
+        @if (errorDe('fecha_nacimiento'); as msg) {
+          <span class="error-campo">{{ msg }}</span>
+        }
+      </label>
+
+      <label>
+        Tipo de sangre (opcional)
+        <input type="text" formControlName="tipo_sangre">
+      </label>
+
+      <label>
+        Color de ojos (opcional)
+        <input type="text" formControlName="color_ojos">
+      </label>
+
+      <label>
+        Días de vacaciones por año (opcional)
+        <input type="number" formControlName="dias_vacaciones">
+      </label>
+
+      @if (error()) {
+        <p class="error-form">{{ error() }}</p>
+      }
+
+      <button type="submit" [disabled]="cargando()">
+        {{ cargando() ? 'Creando cuenta...' : 'Registrarme' }}
+      </button>
+    </form>
+  }
+</div>

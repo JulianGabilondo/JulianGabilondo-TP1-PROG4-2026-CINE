@@ -1,0 +1,115 @@
+<h1>Administrar películas</h1>
+
+<form [formGroup]="form" (ngSubmit)="guardar()" class="form-admin">
+  <label class="campo-ancho">
+    Título
+    <input type="text" formControlName="titulo">
+    @if (form.get('titulo')?.invalid && form.get('titulo')?.touched) {
+      <span class="error-campo">El título es obligatorio.</span>
+    }
+  </label>
+
+  <label class="campo-ancho">
+    Sinopsis
+    <textarea formControlName="sinopsis" rows="3"></textarea>
+  </label>
+
+  <label>
+    Imagen (poster)
+    <input type="file" accept="image/*" (change)="onArchivoSeleccionado($event)">
+  </label>
+
+  <label>
+    Duración (minutos)
+    <input type="number" formControlName="duracionMinutos">
+  </label>
+
+  <label>
+    Formato
+    <select formControlName="formato">
+      <option value="2d">2D</option>
+      <option value="3d">3D</option>
+      <option value="4d">4D</option>
+      <option value="5d">5D</option>
+    </select>
+  </label>
+
+  <label>
+    Idioma
+    <select formControlName="idioma">
+      <option value="castellano">Castellano</option>
+      <option value="subtitulada">Subtitulada</option>
+    </select>
+  </label>
+
+  <label>
+    Restricción de edad
+    <select formControlName="restriccionEdad">
+      <option [ngValue]="null">Sin restricción</option>
+      <option [ngValue]="13">+13</option>
+      <option [ngValue]="18">+18</option>
+    </select>
+  </label>
+
+  <label>
+    Fecha de estreno
+    <input type="date" formControlName="fechaEstreno">
+  </label>
+
+  <label>
+    Precio de preventa (opcional)
+    <input type="number" formControlName="precioPreventa">
+  </label>
+
+  <label>
+    Días de preventa antes del estreno
+    <input type="number" formControlName="diasPreventa">
+  </label>
+
+  <label class="campo-ancho">
+    Géneros (separados por coma)
+    <input type="text" formControlName="generosTexto" placeholder="Acción, Suspenso">
+  </label>
+
+  @if (error()) {
+    <p class="error-form campo-ancho">{{ error() }}</p>
+  }
+
+  <div class="acciones-form">
+    <button type="submit" [disabled]="guardando()">
+      {{ guardando() ? 'Guardando...' : (editandoId() ? 'Actualizar' : 'Crear película') }}
+    </button>
+    @if (editandoId()) {
+      <button type="button" class="boton-secundario" (click)="cancelarEdicion()">Cancelar</button>
+    }
+  </div>
+</form>
+
+<h2>Catálogo actual</h2>
+<table class="tabla-admin">
+  <thead>
+    <tr>
+      <th>Título</th>
+      <th>Formato</th>
+      <th>Estreno</th>
+      <th>Estado</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (peli of peliculas(); track peli.id) {
+      <tr>
+        <td>{{ peli.titulo }}</td>
+        <td>{{ peli.formato.toUpperCase() }}</td>
+        <td>{{ peli.fecha_estreno }}</td>
+        <td>{{ peli.activa ? 'Activa' : 'Oculta' }}</td>
+        <td>
+          <button class="boton-secundario boton-chico" (click)="editar(peli)">Editar</button>
+          <button class="boton-secundario boton-chico" (click)="desactivar(peli.id)">Ocultar</button>
+        </td>
+      </tr>
+    } @empty {
+      <tr><td colspan="5">No hay películas cargadas todavía.</td></tr>
+    }
+  </tbody>
+</table>

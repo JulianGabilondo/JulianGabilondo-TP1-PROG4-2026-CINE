@@ -1,0 +1,171 @@
+// ============================================================
+// DETALLE DE PELÍCULA
+// ============================================================
+
+.header-pelicula {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 2.5rem;
+  padding: 2.5rem 2rem;
+  border-bottom: 1px solid var(--color-borde);
+}
+
+.poster-grande {
+  width: 100%;
+  border-radius: var(--radio-medio);
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  border: 1px solid var(--color-borde);
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-width: 640px;
+}
+
+.formato-kicker {
+  color: var(--color-acento);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.metadata {
+  display: flex;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  color: var(--color-texto-tenue);
+  font-size: 0.9rem;
+
+  .rating {
+    color: var(--color-verde-butaca);
+    font-weight: 600;
+  }
+}
+
+.sinopsis {
+  color: var(--color-texto);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+// El carmesí se reserva para esto: es el único uso "de alarma" real en la página
+.aviso-restriccion {
+  color: #e08585;
+  border-left: 3px solid var(--color-carmesi);
+  padding-left: 0.9rem;
+  font-size: 0.9rem;
+  max-width: 55ch;
+}
+
+.funciones, .resenas {
+  padding: 2rem;
+  border-bottom: 1px solid var(--color-borde);
+}
+
+.sin-datos {
+  color: var(--color-texto-tenue);
+}
+
+.grupo-fecha {
+  margin-bottom: 1.5rem;
+
+  h3 {
+    font-size: 1rem;
+    color: var(--color-texto-tenue);
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+  }
+}
+
+.horarios {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.chip-horario {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-chico);
+  color: var(--color-texto);
+  font-weight: 600;
+  font-size: 0.9rem;
+
+  &:hover {
+    border-color: var(--color-acento);
+    color: var(--color-acento);
+    text-decoration: none;
+  }
+}
+
+.nueva-resena {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-width: 480px;
+  margin-bottom: 2rem;
+
+  select {
+    width: fit-content;
+  }
+
+  textarea {
+    min-height: 80px;
+    resize: vertical;
+    font-family: var(--font-ui);
+  }
+
+  button {
+    width: fit-content;
+  }
+}
+
+.lista-resenas {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  max-width: 640px;
+}
+
+.resena {
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--color-borde);
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  p {
+    color: var(--color-texto-tenue);
+    margin: 0.4rem 0 0;
+  }
+}
+
+.resena-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  strong {
+    font-size: 0.95rem;
+  }
+
+  .estrellas {
+    color: var(--color-acento);
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+}
+
+// Mobile: el poster pasa a estar arriba en vez de al costado
+@media (max-width: 720px) {
+  .header-pelicula {
+    grid-template-columns: 1fr;
+  }
+
+  .poster-grande {
+    max-width: 220px;
+  }
+}

@@ -1,0 +1,259 @@
+// ============================================================
+// CHECKOUT
+// Layout de dos columnas: selección a la izquierda (scrolleable),
+// resumen fijo a la derecha — el usuario nunca pierde de vista el total.
+// ============================================================
+
+.checkout {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 2.5rem;
+  padding: 2rem;
+  align-items: start;
+}
+
+.columna-principal {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  min-width: 0; // evita que el mapa de butacas empuje el layout con su overflow-x
+}
+
+.resumen-funcion {
+  .kicker {
+    display: block;
+    color: var(--color-acento);
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+  }
+
+  p {
+    color: var(--color-texto-tenue);
+  }
+}
+
+.aviso-restriccion {
+  color: #e08585;
+  border-left: 3px solid var(--color-carmesi);
+  padding-left: 0.9rem;
+  font-size: 0.9rem;
+  max-width: 55ch;
+  margin-top: 0.75rem;
+}
+
+.aviso-bloqueo {
+  color: #e08585;
+  font-weight: 600;
+  margin-top: 0.5rem;
+}
+
+.seccion {
+  h2 {
+    margin-bottom: 0.5rem;
+  }
+}
+
+.ayuda-seccion {
+  color: var(--color-texto-tenue);
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+// Candy bar: grilla de botones en vez de lista, para que agregar sea un solo click
+.grid-candy {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 0.75rem;
+}
+
+.item-candy {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--color-fondo-superficie);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-chico);
+  padding: 0.75rem 1rem;
+  color: var(--color-texto);
+  font-weight: 500;
+  text-align: left;
+
+  &:hover {
+    border-color: var(--color-acento);
+  }
+
+  .nombre-candy {
+    font-size: 0.9rem;
+  }
+
+  .precio-candy {
+    color: var(--color-acento);
+    font-weight: 600;
+    font-size: 0.85rem;
+  }
+}
+
+.carrito-candy {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--color-borde);
+    font-size: 0.9rem;
+  }
+}
+
+.acciones-carrito {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.boton-quitar {
+  padding: 0.25rem 0.6rem;
+  font-size: 0.75rem;
+  background: transparent;
+  color: var(--color-texto-tenue);
+  border: 1px solid var(--color-borde);
+
+  &:hover {
+    color: var(--color-texto);
+    border-color: var(--color-texto-tenue);
+  }
+}
+
+// Cupones: chips seleccionables, el activo se marca con el acento
+.cupones-disponibles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+}
+
+.chip-cupon {
+  background: transparent;
+  border: 1px solid var(--color-borde);
+  color: var(--color-texto);
+  font-size: 0.85rem;
+  padding: 0.5rem 0.9rem;
+
+  &.activo {
+    background: var(--color-acento);
+    color: #1a1410;
+    border-color: var(--color-acento);
+  }
+
+  &:hover:not(.activo) {
+    border-color: var(--color-acento);
+  }
+}
+
+.usar-credito {
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--color-texto);
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+
+  input {
+    width: auto;
+  }
+}
+
+.cupon-manual {
+  display: flex;
+  gap: 0.6rem;
+  max-width: 360px;
+
+  input {
+    flex: 1;
+  }
+}
+
+.cupon-activo {
+  color: var(--color-verde-butaca);
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-top: 0.75rem;
+}
+
+// Resumen lateral: se pega arriba al scrollear, siempre visible
+.resumen-lateral {
+  position: sticky;
+  top: 1.5rem;
+  background: var(--color-fondo-superficie);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-medio);
+  padding: 1.5rem;
+
+  h2 {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+  }
+}
+
+.linea {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  padding: 0.5rem 0;
+  color: var(--color-texto-tenue);
+
+  &.descuento span:last-child {
+    color: var(--color-verde-butaca);
+  }
+
+  &.total {
+    border-top: 1px solid var(--color-borde);
+    margin-top: 0.5rem;
+    padding-top: 0.9rem;
+    font-family: var(--font-headline);
+    font-size: 1.3rem;
+    color: var(--color-texto);
+  }
+}
+
+.boton-confirmar {
+  width: 100%;
+  margin-top: 1.25rem;
+  font-size: 1rem;
+  padding: 0.85rem;
+}
+
+.ayuda-resumen {
+  text-align: center;
+  color: var(--color-texto-tenue);
+  font-size: 0.8rem;
+  margin-top: 0.6rem;
+}
+
+.cargando {
+  padding: 3rem;
+  text-align: center;
+  color: var(--color-texto-tenue);
+}
+
+// Mobile: el resumen deja de ser sticky lateral y pasa a estar abajo,
+// pegado al final del flujo normal (un sticky-bottom real complicaría
+// mucho el layout para el alcance de este TP)
+@media (max-width: 860px) {
+  .checkout {
+    grid-template-columns: 1fr;
+    padding: 1.25rem;
+    gap: 2rem;
+  }
+
+  .resumen-lateral {
+    position: static;
+  }
+}

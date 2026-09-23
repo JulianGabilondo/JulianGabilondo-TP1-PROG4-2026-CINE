@@ -1,0 +1,155 @@
+@if (funcion(); as func) {
+  <div class="checkout">
+    <div class="columna-principal">
+      <header class="resumen-funcion">
+        <span class="kicker">Estás comprando</span>
+        <h1>{{ peliculaTitulo() }}</h1>
+        <p>{{ salaNombre() }} — {{ func.fecha }} · {{ func.hora_inicio }}</p>
+
+        @if (restriccionEdad()) {
+          <p class="aviso-restriccion">
+            Apta para mayores de {{ restriccionEdad() }} años. Debe asistir un adulto.
+          </p>
+        }
+
+        @if (bloqueadoPorEdad()) {
+          <p class="aviso-bloqueo">
+            No podés comprar entradas para esta función según la fecha de nacimiento de tu perfil.
+          </p>
+        }
+      </header>
+
+      <section class="seccion">
+        <h2>Elegí tus butacas</h2>
+        <app-mapa-butacas
+          [funcionId]="func.id"
+          [salaId]="salaId()"
+          [precioBase]="func.precio_base"
+          [precioVip]="func.precio_vip"
+          (seleccionCambio)="onSeleccionButacasCambio($event)"
+        />
+      </section>
+
+      <section class="seccion">
+        <h2>Candy bar</h2>
+        <p class="ayuda-seccion">Sumá algo para disfrutar la función — se retira con el mismo QR de la entrada.</p>
+
+        <div class="grid-candy">
+          @for (producto of productosCandy(); track producto.id) {
+            <button class="item-candy" (click)="agregarCandy(producto)" type="button">
+              <span class="nombre-candy">{{ producto.nombre }}</span>
+              <span class="precio-candy">${{ producto.precio }}</span>
+            </button>
+          }
+        </div>
+
+        @if (carritoCandy().length > 0) {
+          <ul class="carrito-candy">
+            @for (item of carritoCandy(); track item.producto_id) {
+              <li>
+                <span>{{ item.cantidad }}× {{ item.nombre }}</span>
+                <span class="acciones-carrito">
+                  ${{ item.precio * item.cantidad }}
+                  <button class="boton-quitar" (click)="quitarCandy(item.producto_id)" type="button">Quitar</button>
+                </span>
+              </li>
+            }
+          </ul>
+        }
+      </section>
+
+      <section class="seccion">
+        <h2>Cupones y descuentos</h2>
+
+        @if (authService.estaLogueado()) {
+          @if (cuponesAutomaticos().length > 0) {
+            <div class="cupones-disponibles">
+              @for (cupon of cuponesAutomaticos(); track cupon.tipo) {
+                <button
+                  type="button"
+                  class="chip-cupon"
+                  [class.activo]="cuponAplicado()?.tipo === cupon.tipo"
+                  (click)="aplicarCuponAutomatico(cupon.tipo)"
+                >
+                  {{ cupon.label }}
+                </button>
+              }
+            </div>
+          }
+
+          @if (creditoDisponible() > 0) {
+            <label class="usar-credito">
+              <input type="checkbox" [(ngModel)]="usarCredito">
+              Usar mi crédito disponible (${{ creditoDisponible() }})
+            </label>
+          }
+        } @else {
+          <p class="ayuda-seccion">Iniciá sesión para ver tus cupones y puntos disponibles.</p>
+        }
+
+        <div class="cupon-manual">
+          <input type="text" placeholder="Código de cupón" [(ngModel)]="codigoCuponManual">
+          <button type="button" class="boton-secundario" (click)="aplicarCuponManual()">Aplicar</button>
+        </div>
+
+        @if (errorCupon()) {
+          <p class="error">{{ errorCupon() }}</p>
+        }
+
+        @if (cuponAplicado()) {
+          <p class="cupon-activo">Cupón aplicado: −{{ cuponAplicado()!.porcentaje }}%</p>
+        }
+      </section>
+    </div>
+
+    <aside class="resumen-lateral">
+      <h2>Resumen</h2>
+
+      <div class="linea">
+        <span>Entradas</span>
+        <span>${{ totalButacas() }}</span>
+      </div>
+      @if (totalCandy() > 0) {
+        <div class="linea">
+          <span>Candy bar</span>
+          <span>${{ totalCandy() }}</span>
+        </div>
+      }
+      @if (cuponAplicado()) {
+        <div class="linea descuento">
+          <span>Descuento</span>
+          <span>−{{ cuponAplicado()!.porcentaje }}%</span>
+        </div>
+      }
+      @if (usarCredito() && creditoDisponible() > 0) {
+        <div class="linea descuento">
+          <span>Crédito aplicado</span>
+          <span>−${{ creditoDisponible() }}</span>
+        </div>
+      }
+
+      <div class="linea total">
+        <strong>Total</strong>
+        <strong>${{ totalFinal() }}</strong>
+      </div>
+
+      @if (errorCompra()) {
+        <p class="error">{{ errorCompra() }}</p>
+      }
+
+      <button
+        class="boton-confirmar"
+        [disabled]="procesando() || butacasSeleccionadas().length === 0 || bloqueadoPorEdad()"
+        (click)="confirmarCompra()"
+      >
+        {{ procesando() ? 'Procesando...' : 'Confirmar compra' }}
+      </button>
+
+      @if (butacasSeleccionadas().length === 0) {
+        <p class="ayuda-resumen">Elegí al menos una butaca para continuar.</p>
+      }
+    </aside>
+  </div>
+} @else {
+  <p class="cargando">Cargando función...</p>
+}

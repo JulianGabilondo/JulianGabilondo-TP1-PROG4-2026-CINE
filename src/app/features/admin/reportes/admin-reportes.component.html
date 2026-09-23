@@ -1,0 +1,85 @@
+<h1>Reportes</h1>
+
+<section class="seccion-facturacion">
+  <h2>Facturación (últimos 30 días)</h2>
+
+  <div class="acciones-export">
+    <button (click)="exportarPDF()">Exportar PDF</button>
+    <button (click)="exportarExcel()">Exportar Excel</button>
+  </div>
+
+  <table class="tabla-facturacion">
+    <thead>
+      <tr>
+        <th>Fecha</th>
+        <th>Entradas vendidas</th>
+        <th>Facturación</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (fila of facturacion(); track fila.dia) {
+        <tr>
+          <td>{{ fila.dia }}</td>
+          <td>{{ fila.cantidad_entradas }}</td>
+          <td>${{ fila.facturacion_total }}</td>
+        </tr>
+      } @empty {
+        <tr><td colspan="3">Todavía no hay ventas registradas.</td></tr>
+      }
+    </tbody>
+  </table>
+</section>
+
+<section class="seccion-graficos">
+  <div class="grafico-container">
+    <h2>Películas más vistas</h2>
+
+    <div class="selector-periodo">
+      <button
+        [class.activo]="periodoSeleccionado() === 'semana'"
+        (click)="cambiarPeriodo('semana')"
+      >
+        Última semana
+      </button>
+      <button
+        [class.activo]="periodoSeleccionado() === 'mes'"
+        (click)="cambiarPeriodo('mes')"
+      >
+        Último mes
+      </button>
+    </div>
+
+    <canvas #canvasPeliculas></canvas>
+  </div>
+
+  <div class="grafico-container">
+    <h2>Productos de candy bar más vendidos</h2>
+    <canvas #canvasProductos></canvas>
+  </div>
+</section>
+
+<section class="seccion-log">
+  <h2>Log de actividad</h2>
+  <table class="tabla-log">
+    <thead>
+      <tr>
+        <th>Fecha</th>
+        <th>Usuario</th>
+        <th>Acción</th>
+        <th>Detalle</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (log of logs(); track log.id) {
+        <tr>
+          <td>{{ log.created_at | date:'short' }}</td>
+          <td>{{ log.usuario_nombre }}</td>
+          <td>{{ log.accion }}</td>
+          <td class="detalle-log">{{ log.detalle | json }}</td>
+        </tr>
+      } @empty {
+        <tr><td colspan="4">Sin actividad registrada todavía.</td></tr>
+      }
+    </tbody>
+  </table>
+</section>

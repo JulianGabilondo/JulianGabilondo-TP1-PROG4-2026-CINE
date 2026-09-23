@@ -1,0 +1,139 @@
+// ============================================================
+// MAPA DE BUTACAS
+// Usa los tokens globales de styles.scss en vez de colores propios,
+// ============================================================
+
+$color-reservada: #55524c;
+$color-accesible: #5b8ba6;
+
+.leyenda {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.85rem;
+  color: var(--color-texto-tenue);
+
+  .item {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .chip {
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+    display: inline-block;
+
+    &.libre { background: transparent; border: 1px solid var(--color-borde); }
+    &.mia { background: var(--color-verde-butaca); }
+    &.reservada { background: $color-reservada; }
+    &.vip { background: var(--color-acento); }
+    &.accesible { background: $color-accesible; }
+  }
+}
+
+.pantalla {
+  text-align: center;
+  padding: 0.75rem;
+  margin-bottom: 2.5rem;
+  color: var(--color-texto-tenue);
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  border-bottom: 2px solid var(--color-borde);
+  border-radius: 50% 50% 0 0 / 80px 80px 0 0;
+}
+
+.mapa {
+  background: var(--color-fondo-superficie);
+  border: 1px solid var(--color-borde);
+  padding: 1.5rem;
+  border-radius: var(--radio-medio);
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  overflow-x: auto;
+}
+
+.fila {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+
+  .letra-fila {
+    width: 20px;
+    color: var(--color-texto-tenue);
+    font-size: 0.75rem;
+    flex-shrink: 0;
+  }
+}
+
+.butaca {
+  width: 28px;
+  height: 28px;
+  border-radius: 5px 5px 2px 2px;
+  font-family: var(--font-ui);
+  font-size: 0.65rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid var(--color-borde);
+  background: transparent;
+  color: var(--color-texto-tenue);
+  flex-shrink: 0;
+  padding: 0;
+  transition: transform 0.1s ease, background 0.15s ease, border-color 0.15s ease;
+
+  &:hover:not(:disabled) {
+    transform: scale(1.15);
+    border-color: var(--color-texto);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+
+  // El estado ("mía") pisa siempre al tipo (vip/accesible) — el usuario
+  // necesita ver clarísimo qué seleccionó, por sobre qué tipo de butaca es
+  &.mia {
+    background: var(--color-verde-butaca);
+    border-color: var(--color-verde-butaca);
+    color: #fff;
+  }
+
+  &.reservada {
+    background: $color-reservada;
+    border-color: $color-reservada;
+    color: #cfc9bf;
+    opacity: 0.55;
+  }
+
+  &.vip:not(.mia):not(.reservada) {
+    background: rgba(224, 168, 62, 0.15); // var(--color-acento) con opacidad
+    border-color: var(--color-acento);
+    color: var(--color-acento);
+  }
+
+  &.accesible:not(.mia):not(.reservada) {
+    background: rgba(91, 139, 166, 0.15);
+    border-color: $color-accesible;
+    color: $color-accesible;
+  }
+}
+
+.resumen-seleccion {
+  margin-top: 1.25rem;
+  text-align: right;
+  font-family: var(--font-headline);
+  font-size: 1.3rem;
+  color: var(--color-texto);
+}
+
+// Mobile: mapa más chico para que entre mejor en pantallas angostas
+@media (max-width: 480px) {
+  .butaca {
+    width: 24px;
+    height: 24px;
+    font-size: 0.6rem;
+  }
+}

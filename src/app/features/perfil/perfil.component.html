@@ -1,0 +1,84 @@
+@if (authService.perfil(); as perfil) {
+  <div class="perfil">
+    <header class="header-perfil">
+      <h1>{{ perfil.nombre }} {{ perfil.apellido }}</h1>
+      <div class="datos-rapidos">
+        <span>⭐ {{ perfil.puntos_acumulados }} puntos</span>
+        <span>💳 ${{ perfil.credito_disponible }} de crédito</span>
+      </div>
+      <button (click)="cerrarSesion()" class="boton-secundario">Cerrar sesión</button>
+    </header>
+
+    @if (mensaje()) {
+      <p class="mensaje">{{ mensaje() }}</p>
+    }
+
+    <nav class="tabs">
+      <button
+        [class.activo]="pestanaActiva() === 'entradas'"
+        (click)="cambiarPestana('entradas')"
+      >
+        Mis entradas
+      </button>
+      <button
+        [class.activo]="pestanaActiva() === 'peliculas'"
+        (click)="cambiarPestana('peliculas')"
+      >
+        Mis películas
+      </button>
+    </nav>
+
+    @if (pestanaActiva() === 'entradas') {
+      <section class="lista-entradas">
+        @for (entrada of misEntradas(); track entrada.id) {
+          <article class="entrada" [class.cancelada]="entrada.cancelada">
+            <img [src]="entrada.peliculaImagen" [alt]="entrada.peliculaTitulo">
+            <div class="info-entrada">
+              <h3>{{ entrada.peliculaTitulo }}</h3>
+              <p>{{ entrada.fecha }} — {{ entrada.horaInicio }}</p>
+              <p>Butacas: {{ entrada.butacas.join(', ') }}</p>
+              <p>Total: ${{ entrada.total }}</p>
+
+              @if (entrada.cancelada) {
+                <span class="badge cancelada">Cancelada</span>
+              } @else if (entrada.qr_validado) {
+                <span class="badge validada">Usada</span>
+              } @else if (puedeCancelarse(entrada)) {
+                <button
+                  class="boton-cancelar"
+                  [disabled]="cancelandoId() === entrada.id"
+                  (click)="cancelar(entrada)"
+                >
+                  {{ cancelandoId() === entrada.id ? 'Cancelando...' : 'Cancelar entrada' }}
+                </button>
+              } @else {
+                <span class="badge no-cancelable">Ya no se puede cancelar</span>
+              }
+            </div>
+          </article>
+        } @empty {
+          <p>Todavía no compraste ninguna entrada.</p>
+        }
+      </section>
+    }
+
+    @if (pestanaActiva() === 'peliculas') {
+      <section class="grid-mis-peliculas">
+        @for (peli of misPeliculas(); track peli.peliculaId) {
+          <article class="pelicula-vista">
+            <img [src]="peli.imagenUrl" [alt]="peli.titulo">
+            <h4>{{ peli.titulo }}</h4>
+            <p>{{ peli.fechaVista }}</p>
+            @if (peli.miCalificacion) {
+              <p>{{ '⭐'.repeat(peli.miCalificacion) }}</p>
+            } @else {
+              <p class="sin-calificar">Todavía no la calificaste</p>
+            }
+          </article>
+        } @empty {
+          <p>Todavía no viste ninguna película (o no se validó ninguna entrada).</p>
+        }
+      </section>
+    }
+  </div>
+}

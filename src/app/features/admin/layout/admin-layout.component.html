@@ -1,0 +1,17 @@
+<div class="shell-admin">
+  <aside class="sidebar-admin">
+    <span class="titulo-sidebar">Administración</span>
+
+    <nav>
+      <a routerLink="/admin" routerLinkActive="activo" [routerLinkActiveOptions]="{ exact: true }">Resumen</a>
+      <a routerLink="/admin/peliculas" routerLinkActive="activo">Películas</a>
+      <a routerLink="/admin/funciones" routerLinkActive="activo">Funciones</a>
+      <a routerLink="/admin/productos" routerLinkActive="activo">Candy bar</a>
+      <a routerLink="/admin/reportes" routerLinkActive="activo">Reportes</a>
+    </nav>
+  </aside>
+
+  <div class="contenido-admin">
+    <router-outlet />
+  </div>
+</div>

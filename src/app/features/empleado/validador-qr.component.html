@@ -1,0 +1,60 @@
+<h1>Validador de entradas y candy bar</h1>
+<p class="ayuda">
+  Escaneá el código QR con el lector, o escribilo manualmente si el lector no funciona.
+</p>
+
+<div class="buscador-codigo">
+  <input
+    type="text"
+    placeholder="Código QR"
+    [(ngModel)]="codigoIngresado"
+    (keyup.enter)="buscar()"
+    autofocus
+  >
+  <button (click)="buscar()" [disabled]="buscando()">
+    {{ buscando() ? 'Buscando...' : 'Buscar' }}
+  </button>
+  <button (click)="limpiar()" class="secundario">Limpiar</button>
+</div>
+
+@if (mensaje()) {
+  <p class="mensaje">{{ mensaje() }}</p>
+}
+
+@if (resultado(); as res) {
+  @if (!res.encontrado) {
+    <p class="error-validacion">{{ res.error }}</p>
+  } @else {
+    <div class="resultado-validacion">
+      <h2>{{ res.peliculaTitulo }}</h2>
+      <p>{{ res.salaNombre }} — {{ res.fecha }} {{ res.horaInicio }}</p>
+      <p>Butacas: {{ res.butacas?.join(', ') }}</p>
+
+      @if (res.error) {
+        <p class="error-validacion">{{ res.error }}</p>
+      } @else if (res.yaValidado) {
+        <p class="ya-validado">Esta entrada ya fue validada. No debe volver a ingresar.</p>
+      } @else {
+        <button class="boton-confirmar" (click)="confirmarEntrada()">
+          Validar ingreso al cine
+        </button>
+      }
+
+      @if (res.productos && res.productos.length > 0) {
+        <h3>Candy bar</h3>
+        <ul class="lista-productos">
+          @for (prod of res.productos; track prod.nombre) {
+            <li>
+              {{ prod.cantidad }}x {{ prod.nombre }}
+              @if (prod.yaValidado) {
+                <span class="ya-validado">— ya entregado</span>
+              } @else {
+                <button (click)="confirmarProducto(prod.id!)">Entregar</button>
+              }
+            </li>
+          }
+        </ul>
+      }
+    </div>
+  }
+}

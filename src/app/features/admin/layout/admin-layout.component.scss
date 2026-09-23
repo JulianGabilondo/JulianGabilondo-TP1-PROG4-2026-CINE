@@ -1,0 +1,66 @@
+.shell-admin {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  min-height: calc(100vh - 65px); // resta la altura aproximada del nav principal
+}
+
+.sidebar-admin {
+  border-right: 1px solid var(--color-borde);
+  padding: 2rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.titulo-sidebar {
+  font-family: var(--font-headline);
+  font-size: 1.1rem;
+  color: var(--color-texto-tenue);
+}
+
+nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+
+  a {
+    color: var(--color-texto);
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 0.6rem 0.75rem;
+    border-radius: var(--radio-chico);
+
+    &:hover {
+      background: var(--color-fondo-superficie);
+      text-decoration: none;
+    }
+
+    &.activo {
+      background: var(--color-fondo-superficie);
+      color: var(--color-acento);
+      font-weight: 600;
+    }
+  }
+}
+
+.contenido-admin {
+  padding: 2rem 2.5rem;
+  min-width: 0; // evita que tablas anchas rompan el grid
+}
+
+@media (max-width: 780px) {
+  .shell-admin {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar-admin {
+    border-right: none;
+    border-bottom: 1px solid var(--color-borde);
+    padding: 1.25rem;
+
+    nav {
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+  }
+}

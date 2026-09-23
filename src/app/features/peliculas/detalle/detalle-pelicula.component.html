@@ -1,0 +1,83 @@
+@if (pelicula(); as peli) {
+  <header class="header-pelicula">
+    <img class="poster-grande" [src]="peli.imagen_url" [alt]="peli.titulo">
+
+    <div class="info">
+      <span class="formato-kicker">{{ peli.formato.toUpperCase() }} · {{ peli.idioma === 'castellano' ? 'Castellano' : 'Subtitulada' }}</span>
+      <h1>{{ peli.titulo }}</h1>
+
+      <div class="metadata">
+        <span>{{ peli.duracion_minutos }} min</span>
+        @if (peli.promedio_estrellas) {
+          <span class="rating">{{ peli.promedio_estrellas }} ★</span>
+        }
+        @if (peli.generos && peli.generos.length > 0) {
+          <span>{{ peli.generos.join(', ') }}</span>
+        }
+      </div>
+
+      <p class="sinopsis">{{ peli.sinopsis }}</p>
+
+      @if (peli.restriccion_edad) {
+        <p class="aviso-restriccion">
+          Apta para mayores de {{ peli.restriccion_edad }} años. Toda entrada comprada para esta función debe ir acompañada de un adulto.
+        </p>
+      }
+    </div>
+  </header>
+
+  <section class="funciones">
+    <h2>Funciones disponibles</h2>
+    @if (funciones().length === 0) {
+      <p class="sin-datos">No hay funciones programadas por el momento.</p>
+    } @else {
+      @for (grupo of funcionesPorFecha() | keyvalue; track grupo.key) {
+        <div class="grupo-fecha">
+          <h3>{{ grupo.key }}</h3>
+          <div class="horarios">
+            @for (funcion of grupo.value; track funcion.id) {
+              <a [routerLink]="['/compra', funcion.id]" class="chip-horario">
+                {{ funcion.hora_inicio }}
+              </a>
+            }
+          </div>
+        </div>
+      }
+    }
+  </section>
+
+  <section class="resenas">
+    <h2>Reseñas</h2>
+
+    @if (authService.estaLogueado() && !usuarioYaReseno()) {
+      <div class="nueva-resena">
+        <select [(ngModel)]="nuevaEstrellas">
+          @for (n of [1,2,3,4,5]; track n) {
+            <option [ngValue]="n">{{ n }} estrella{{ n > 1 ? 's' : '' }}</option>
+          }
+        </select>
+        <textarea [(ngModel)]="nuevoComentario" placeholder="Contanos qué te pareció..."></textarea>
+        <button (click)="enviarResena()">Publicar reseña</button>
+        @if (errorResena()) {
+          <p class="error">{{ errorResena() }}</p>
+        }
+      </div>
+    }
+
+    <div class="lista-resenas">
+      @for (resena of resenas(); track resena.id) {
+        <article class="resena">
+          <div class="resena-header">
+            <strong>{{ resena.autor_nombre }}</strong>
+            <span class="estrellas">{{ resena.estrellas }} ★</span>
+          </div>
+          @if (resena.comentario) {
+            <p>{{ resena.comentario }}</p>
+          }
+        </article>
+      } @empty {
+        <p class="sin-datos">Todavía no hay reseñas para esta película. ¡Sé el primero!</p>
+      }
+    </div>
+  </section>
+}
