@@ -1,0 +1,38 @@
+<header class="header-seccion-simple">
+  <span class="kicker">Próximos estrenos</span>
+  <h1>Lo que se viene</h1>
+  <p class="bajada">Activá una alerta y te avisamos apenas se habilite la venta de entradas.</p>
+</header>
+
+@if (!authService.estaLogueado()) {
+  <p class="aviso-login">
+    <a routerLink="/login">Iniciá sesión</a> para poder activar alertas.
+  </p>
+}
+
+@if (peliculas().length === 0) {
+  <p class="sin-datos">No hay estrenos próximos cargados por el momento.</p>
+} @else {
+  <div class="grid-proximamente">
+    @for (peli of peliculas(); track peli.id) {
+      <article class="card-proximamente">
+        <img [src]="peli.imagen_url" [alt]="peli.titulo">
+        <div class="info-proximamente">
+          <h3>{{ peli.titulo }}</h3>
+          <p class="fecha-estreno">Estreno: {{ peli.fecha_estreno }}</p>
+
+          @if (authService.estaLogueado()) {
+            <button
+              class="boton-alerta"
+              [class.activa]="alertasService.tieneAlerta(peli.id)"
+              [disabled]="cargandoAlerta() === peli.id"
+              (click)="toggleAlerta(peli.id)"
+            >
+              {{ alertasService.tieneAlerta(peli.id) ? '🔔 Avisándote' : 'Avisarme' }}
+            </button>
+          }
+        </div>
+      </article>
+    }
+  </div>
+}

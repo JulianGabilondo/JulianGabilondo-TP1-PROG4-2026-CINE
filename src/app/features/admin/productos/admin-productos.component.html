@@ -1,60 +1,70 @@
 <h1>Candy bar</h1>
 
 @if (error()) {
-  <p class="error">{{ error() }}</p>
+  <p class="error-form">{{ error() }}</p>
 }
 
-<section>
-  <h2>Nueva categoría</h2>
-  <form [formGroup]="formCategoria" (ngSubmit)="guardarCategoria()">
-    <input type="text" formControlName="nombre" placeholder="Ej: Bebidas">
-    <button type="submit">Crear</button>
-  </form>
-</section>
+<div class="grid-formularios-candy">
+  <section class="card-form">
+    <h2>Nueva categoría</h2>
+    <form [formGroup]="formCategoria" (ngSubmit)="guardarCategoria()" class="form-en-linea">
+      <input type="text" formControlName="nombre" placeholder="Ej: Bebidas">
+      <button type="submit">Crear</button>
+    </form>
+  </section>
 
-<section>
-  <h2>Nuevo producto</h2>
-  <form [formGroup]="formProducto" (ngSubmit)="guardarProducto()">
-    <input type="text" formControlName="nombre" placeholder="Nombre">
-    <input type="number" formControlName="precio" placeholder="Precio">
-    <select formControlName="categoriaId">
-      <option [ngValue]="null">Categoría</option>
-      @for (cat of categorias(); track cat.id) {
-        <option [ngValue]="cat.id">{{ cat.nombre }}</option>
+  <section class="card-form">
+    <h2>Nuevo producto</h2>
+    <form [formGroup]="formProducto" (ngSubmit)="guardarProducto()" class="form-apilado">
+      <input type="text" formControlName="nombre" placeholder="Nombre">
+      <input type="number" formControlName="precio" placeholder="Precio">
+      <select formControlName="categoriaId">
+        <option [ngValue]="null">Categoría</option>
+        @for (cat of categorias(); track cat.id) {
+          <option [ngValue]="cat.id">{{ cat.nombre }}</option>
+        }
+      </select>
+      <input type="number" formControlName="puntosCanje" placeholder="Puntos para canjear (opcional)">
+      <button type="submit">Crear producto</button>
+    </form>
+  </section>
+
+  <section class="card-form">
+    <h2>Nuevo combo</h2>
+    <form [formGroup]="formCombo" (ngSubmit)="guardarCombo()" class="form-apilado">
+      <input type="text" formControlName="nombre" placeholder="Ej: Combo Pareja">
+      <input type="number" formControlName="precioFijo" placeholder="Precio fijo">
+      <button type="submit">Crear combo</button>
+    </form>
+  </section>
+</div>
+
+<div class="grid-listas-candy">
+  <section>
+    <h2>Productos cargados</h2>
+    <ul class="lista-simple">
+      @for (p of productos(); track p.id) {
+        <li>
+          <span>{{ p.nombre }}</span>
+          <span class="precio-lista">${{ p.precio }}</span>
+        </li>
+      } @empty {
+        <li class="vacio">Sin productos todavía.</li>
       }
-    </select>
-    <input type="number" formControlName="puntosCanje" placeholder="Puntos para canjear (opcional)">
-    <button type="submit">Crear</button>
-  </form>
-</section>
+    </ul>
+  </section>
 
-<section>
-  <h2>Nuevo combo</h2>
-  <form [formGroup]="formCombo" (ngSubmit)="guardarCombo()">
-    <input type="text" formControlName="nombre" placeholder="Ej: Combo Pareja">
-    <input type="number" formControlName="precioFijo" placeholder="Precio fijo">
-    <button type="submit">Crear</button>
-  </form>
-</section>
-
-<section>
-  <h2>Productos cargados</h2>
-  <ul>
-    @for (p of productos(); track p.id) {
-      <li>{{ p.nombre }} — ${{ p.precio }}</li>
-    } @empty {
-      <li>Sin productos todavía.</li>
-    }
-  </ul>
-</section>
-
-<section>
-  <h2>Combos cargados</h2>
-  <ul>
-    @for (c of combos(); track c.id) {
-      <li>{{ c.nombre }} — ${{ c.precio_fijo }}</li>
-    } @empty {
-      <li>Sin combos todavía.</li>
-    }
-  </ul>
-</section>
+  <section>
+    <h2>Combos cargados</h2>
+    <ul class="lista-simple">
+      @for (c of combos(); track c.id) {
+        <li>
+          <span>{{ c.nombre }}</span>
+          <span class="precio-lista">${{ c.precio_fijo }}</span>
+        </li>
+      } @empty {
+        <li class="vacio">Sin combos todavía.</li>
+      }
+    </ul>
+  </section>
+</div>

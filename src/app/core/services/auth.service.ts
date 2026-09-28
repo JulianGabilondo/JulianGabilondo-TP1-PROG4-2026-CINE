@@ -56,8 +56,7 @@ export class AuthService {
     }
   }
 
-  async registrarse(datos: RegistroData): Promise<{ error: string | null }> {
-  
+async registrarse(datos: RegistroData): Promise<{ error: string | null }> {
   const { data, error } = await this.supabaseService.client.auth.signUp({
     email: datos.email,
     password: datos.password,
@@ -68,7 +67,8 @@ export class AuthService {
         fecha_nacimiento: datos.fecha_nacimiento,
         tipo_sangre: datos.tipo_sangre ?? null,
         color_ojos: datos.color_ojos ?? null,
-        dias_vacaciones: datos.dias_vacaciones ?? null
+        dias_vacaciones: datos.dias_vacaciones ?? null,
+        rol: datos.rol ?? 'cliente' 
       }
     }
   });

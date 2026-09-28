@@ -1,0 +1,28 @@
+.pantalla-auth {
+  display: flex;
+  justify-content: center;
+  padding: 3rem 1.5rem;
+}
+
+.card-auth {
+  width: 100%;
+  max-width: 380px;
+  background: var(--color-fondo-superficie);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-medio);
+  padding: 2.5rem;
+
+  h1 {
+    font-size: 1.6rem;
+    margin-bottom: 1.5rem;
+  }
+
+  button {
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+}
+
+.card-auth-ancha {
+  max-width: 460px;
+}

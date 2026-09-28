@@ -1,14 +1,15 @@
 <h1>Reportes</h1>
 
-<section class="seccion-facturacion">
-  <h2>Facturación (últimos 30 días)</h2>
-
-  <div class="acciones-export">
-    <button (click)="exportarPDF()">Exportar PDF</button>
-    <button (click)="exportarExcel()">Exportar Excel</button>
+<section class="seccion-reporte">
+  <div class="header-seccion">
+    <h2>Facturación (últimos 30 días)</h2>
+    <div class="acciones-export">
+      <button class="boton-secundario boton-chico" (click)="exportarPDF()">Exportar PDF</button>
+      <button class="boton-secundario boton-chico" (click)="exportarExcel()">Exportar Excel</button>
+    </div>
   </div>
 
-  <table class="tabla-facturacion">
+  <table class="tabla-admin">
     <thead>
       <tr>
         <th>Fecha</th>
@@ -31,36 +32,38 @@
 </section>
 
 <section class="seccion-graficos">
-  <div class="grafico-container">
-    <h2>Películas más vistas</h2>
-
-    <div class="selector-periodo">
-      <button
-        [class.activo]="periodoSeleccionado() === 'semana'"
-        (click)="cambiarPeriodo('semana')"
-      >
-        Última semana
-      </button>
-      <button
-        [class.activo]="periodoSeleccionado() === 'mes'"
-        (click)="cambiarPeriodo('mes')"
-      >
-        Último mes
-      </button>
+  <div class="card-grafico">
+    <div class="header-seccion">
+      <h2>Películas más vistas</h2>
+      <div class="selector-periodo">
+        <button
+          class="chip-periodo"
+          [class.activo]="periodoSeleccionado() === 'semana'"
+          (click)="cambiarPeriodo('semana')"
+        >
+          Semana
+        </button>
+        <button
+          class="chip-periodo"
+          [class.activo]="periodoSeleccionado() === 'mes'"
+          (click)="cambiarPeriodo('mes')"
+        >
+          Mes
+        </button>
+      </div>
     </div>
-
     <canvas #canvasPeliculas></canvas>
   </div>
 
-  <div class="grafico-container">
-    <h2>Productos de candy bar más vendidos</h2>
+  <div class="card-grafico">
+    <h2>Candy bar más vendido</h2>
     <canvas #canvasProductos></canvas>
   </div>
 </section>
 
-<section class="seccion-log">
+<section class="seccion-reporte">
   <h2>Log de actividad</h2>
-  <table class="tabla-log">
+  <table class="tabla-admin">
     <thead>
       <tr>
         <th>Fecha</th>

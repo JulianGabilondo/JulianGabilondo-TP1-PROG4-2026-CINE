@@ -2,6 +2,7 @@ import { Component, signal, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth.service';
+import { RolUsuario } from '../../../models/usuario.model';
 
 @Component({
   selector: 'app-registro',
@@ -25,7 +26,8 @@ export class RegistroComponent {
     fecha_nacimiento: ['', Validators.required],
     tipo_sangre: [''],
     color_ojos: [''],
-    dias_vacaciones: [null as number | null]
+    dias_vacaciones: [null as number | null],
+    rol: ['cliente' as RolUsuario, Validators.required]
   });
 
   constructor(
@@ -33,8 +35,6 @@ export class RegistroComponent {
     private router: Router
   ) {}
 
-  // Devuelve el mensaje de error específico de un campo, o null si está OK.
-  // Se llama desde el HTML para mostrar el error debajo de cada input.
   errorDe(campo: string): string | null {
     const control = this.form.get(campo);
     if (!control || !control.touched || !control.errors) return null;
@@ -51,8 +51,8 @@ export class RegistroComponent {
 
   async registrarse() {
     if (this.form.invalid) {
-      this.form.markAllAsTouched(); // fuerza que se muestren todos los errores de campo a la vez
-      this.error.set('Revisá los campos marcados en rojo antes de continuar.');
+      this.form.markAllAsTouched();
+      this.error.set('Revisá los campos marcados antes de continuar.');
       return;
     }
 
@@ -69,7 +69,8 @@ export class RegistroComponent {
       fecha_nacimiento: v.fecha_nacimiento!,
       tipo_sangre: v.tipo_sangre || undefined,
       color_ojos: v.color_ojos || undefined,
-      dias_vacaciones: v.dias_vacaciones ?? undefined
+      dias_vacaciones: v.dias_vacaciones ?? undefined,
+      rol: v.rol as RolUsuario
     });
 
     this.cargando.set(false);

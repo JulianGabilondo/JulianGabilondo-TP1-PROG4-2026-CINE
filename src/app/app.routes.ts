@@ -13,6 +13,10 @@ export const routes: Routes = [
     loadComponent: () => import('./features/peliculas/detalle/detalle-pelicula.component').then(c => c.DetallePeliculaComponent)
   },
   {
+    path: 'proximamente',
+    loadComponent: () => import('./features/peliculas/proximamente/proximamente.component').then(c => c.ProximamenteComponent)
+  },
+  {
     path: 'login',
     loadComponent: () => import('./features/auth/login/login.component').then(c => c.LoginComponent)
   },

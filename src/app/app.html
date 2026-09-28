@@ -2,6 +2,8 @@
   <a routerLink="/" class="logo">Cine</a>
 
   <div class="nav-links">
+    <a routerLink="/proximamente">Próximamente</a>
+
     @if (authService.esAdmin()) {
       <a routerLink="/admin">Admin</a>
     }

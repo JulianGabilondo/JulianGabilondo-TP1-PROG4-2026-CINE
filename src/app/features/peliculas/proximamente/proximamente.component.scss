@@ -1,0 +1,83 @@
+// ============================================================
+// PRÓXIMAMENTE
+// ============================================================
+
+.header-seccion-simple {
+  padding: 2.5rem 2rem 1.5rem;
+
+  .kicker {
+    display: block;
+    color: var(--color-acento);
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+  }
+
+  .bajada {
+    color: var(--color-texto-tenue);
+  }
+}
+
+.aviso-login {
+  padding: 0 2rem 1.5rem;
+  color: var(--color-texto-tenue);
+  font-size: 0.9rem;
+}
+
+.sin-datos {
+  padding: 0 2rem;
+  color: var(--color-texto-tenue);
+}
+
+.grid-proximamente {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.5rem;
+  padding: 0 2rem 3rem;
+}
+
+.card-proximamente {
+  background: var(--color-fondo-superficie);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-medio);
+  overflow: hidden;
+
+  img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+  }
+}
+
+.info-proximamente {
+  padding: 1rem;
+
+  h3 {
+    font-size: 1rem;
+    margin-bottom: 0.3rem;
+  }
+}
+
+.fecha-estreno {
+  color: var(--color-texto-tenue);
+  font-size: 0.8rem;
+  margin-bottom: 0.9rem;
+}
+
+.boton-alerta {
+  width: 100%;
+  background: transparent;
+  border: 1px solid var(--color-acento);
+  color: var(--color-acento);
+  font-size: 0.85rem;
+
+  &:hover:not(:disabled) {
+    background: rgba(224, 168, 62, 0.12);
+  }
+
+  &.activa {
+    background: var(--color-acento);
+    color: #1a1410;
+  }
+}

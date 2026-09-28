@@ -1,0 +1,77 @@
+// ============================================================
+// ADMIN — REPORTES
+// ============================================================
+
+.seccion-reporte {
+  margin-bottom: 2.5rem;
+  max-width: 900px;
+}
+
+.header-seccion {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+
+  h2 {
+    margin-bottom: 0;
+  }
+}
+
+.acciones-export {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.seccion-graficos {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.card-grafico {
+  background: var(--color-fondo-superficie);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-medio);
+  padding: 1.25rem;
+
+  h2 {
+    font-size: 1rem;
+  }
+}
+
+.selector-periodo {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.chip-periodo {
+  background: transparent;
+  border: 1px solid var(--color-borde);
+  color: var(--color-texto-tenue);
+  font-size: 0.8rem;
+  padding: 0.35rem 0.8rem;
+
+  &.activo {
+    background: var(--color-acento);
+    color: #1a1410;
+    border-color: var(--color-acento);
+  }
+}
+
+.detalle-log {
+  font-size: 0.75rem;
+  color: var(--color-texto-tenue);
+  max-width: 280px;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+@media (max-width: 780px) {
+  .seccion-graficos {
+    grid-template-columns: 1fr;
+  }
+}

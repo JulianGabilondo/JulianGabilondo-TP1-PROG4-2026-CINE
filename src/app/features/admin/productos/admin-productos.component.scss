@@ -1,0 +1,75 @@
+// ============================================================
+// ADMIN — CANDY BAR
+// 3 formularios chicos en card, más 2 listas de solo lectura abajo
+// ============================================================
+
+.grid-formularios-candy {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  margin-bottom: 2.5rem;
+}
+
+.card-form {
+  background: var(--color-fondo-superficie);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-medio);
+  padding: 1.25rem;
+
+  h2 {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+}
+
+.form-en-linea {
+  display: flex;
+  gap: 0.6rem;
+
+  input {
+    flex: 1;
+  }
+}
+
+.form-apilado {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.grid-listas-candy {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  max-width: 700px;
+}
+
+.lista-simple {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  li {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--color-borde);
+    font-size: 0.9rem;
+
+    &.vacio {
+      color: var(--color-texto-tenue);
+      border-bottom: none;
+    }
+  }
+
+  .precio-lista {
+    color: var(--color-acento);
+    font-weight: 600;
+  }
+}
+
+@media (max-width: 780px) {
+  .grid-formularios-candy, .grid-listas-candy {
+    grid-template-columns: 1fr;
+  }
+}
