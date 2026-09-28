@@ -2,7 +2,6 @@ import { Component, signal, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth.service';
-import { RolUsuario } from '../../../models/usuario.model';
 
 @Component({
   selector: 'app-registro',
@@ -26,8 +25,7 @@ export class RegistroComponent {
     fecha_nacimiento: ['', Validators.required],
     tipo_sangre: [''],
     color_ojos: [''],
-    dias_vacaciones: [null as number | null],
-    rol: ['cliente' as RolUsuario, Validators.required]
+    dias_vacaciones: [null as number | null]
   });
 
   constructor(
@@ -69,8 +67,7 @@ export class RegistroComponent {
       fecha_nacimiento: v.fecha_nacimiento!,
       tipo_sangre: v.tipo_sangre || undefined,
       color_ojos: v.color_ojos || undefined,
-      dias_vacaciones: v.dias_vacaciones ?? undefined,
-      rol: v.rol as RolUsuario
+      dias_vacaciones: v.dias_vacaciones ?? undefined
     });
 
     this.cargando.set(false);

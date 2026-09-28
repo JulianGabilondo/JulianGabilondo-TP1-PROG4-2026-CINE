@@ -68,7 +68,7 @@ async registrarse(datos: RegistroData): Promise<{ error: string | null }> {
         tipo_sangre: datos.tipo_sangre ?? null,
         color_ojos: datos.color_ojos ?? null,
         dias_vacaciones: datos.dias_vacaciones ?? null,
-        rol: datos.rol ?? 'cliente' 
+        
       }
     }
   });

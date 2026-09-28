@@ -22,6 +22,10 @@ export const ADMIN_ROUTES: Routes = [
         loadComponent: () => import('./productos/admin-productos.component').then(c => c.AdminProductosComponent)
       },
       {
+        path: 'usuarios',
+        loadComponent: () => import('./usuarios/admin-usuarios.component').then(c => c.AdminUsuariosComponent)
+      },
+      {
         path: 'reportes',
         loadComponent: () => import('./reportes/admin-reportes.component').then(c => c.AdminReportesComponent)
       }

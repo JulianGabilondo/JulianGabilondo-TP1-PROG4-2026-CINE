@@ -63,15 +63,6 @@
           <input type="number" formControlName="dias_vacaciones">
         </label>
 
-        <label>
-      Tipo de cuenta
-       <select formControlName="rol">
-      <option value="cliente">Cliente</option>
-      <option value="empleado">Empleado (valida entradas)</option>
-      <option value="admin">Administrador</option>
-       </select>
-      </label>
-
         @if (error()) {
           <p class="error-form">{{ error() }}</p>
         }
