@@ -1,12 +1,13 @@
 import { Component, signal, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FechaInputComponent } from '../../../shared/fecha-input/fecha-input.component';
 import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-registro',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, FechaInputComponent],
   templateUrl: './registro.component.html',
   styleUrl: './registro.component.scss'
 })
@@ -39,6 +40,7 @@ export class RegistroComponent {
 
     if (control.errors['required']) return 'Este campo es obligatorio.';
     if (control.errors['email']) return 'El email no tiene un formato válido.';
+    if (control.errors['fechaInvalida']) return 'Completá una fecha válida (DD/MM/AAAA).';
     if (control.errors['minlength']) {
       const requerido = control.errors['minlength'].requiredLength;
       return `Necesita al menos ${requerido} caracteres.`;

@@ -1,0 +1,10 @@
+<input
+  type="text"
+  inputmode="numeric"
+  placeholder="DD/MM/AAAA"
+  maxlength="10"
+  [value]="valorMostrado()"
+  [disabled]="deshabilitado()"
+  (input)="onInput($event)"
+  (blur)="onBlur()"
+>

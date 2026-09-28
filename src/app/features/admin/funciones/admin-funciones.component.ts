@@ -1,6 +1,7 @@
 import { Component, OnInit, signal, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PeliculasService, Pelicula } from '../../../core/services/peliculas.service';
+import { FechaInputComponent } from '../../../shared/fecha-input/fecha-input.component';
 import { FuncionesAdminService, FuncionAdmin } from '../../../core/services/funciones-admin.service';
 import { SalasService } from '../../../core/services/salas.service';
 import { Sala } from '../../../models/sala.model';
@@ -8,7 +9,7 @@ import { Sala } from '../../../models/sala.model';
 @Component({
   selector: 'app-admin-funciones',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, FechaInputComponent],
   templateUrl: './admin-funciones.component.html',
   styleUrl: './admin-funciones.component.scss'
 })

@@ -42,8 +42,8 @@
 
         <label>
           Fecha de nacimiento
-          <input type="date" formControlName="fecha_nacimiento">
-          @if (errorDe('fecha_nacimiento'); as msg) {
+          <app-fecha-input formControlName="fecha_nacimiento" />
+           @if (errorDe('fecha_nacimiento'); as msg) {
             <span class="error-campo">{{ msg }}</span>
           }
         </label>

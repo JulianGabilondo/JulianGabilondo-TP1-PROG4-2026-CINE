@@ -1,12 +1,13 @@
 import { Component, OnInit, signal, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PeliculasService, Pelicula } from '../../../core/services/peliculas.service';
+import { FechaInputComponent } from '../../../shared/fecha-input/fecha-input.component';
 import { AdminPeliculasService } from '../../../core/services/admin-peliculas.service';
 
 @Component({
   selector: 'app-admin-peliculas',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, FechaInputComponent],
   templateUrl: './admin-peliculas.component.html',
   styleUrl: './admin-peliculas.component.scss'
 })
