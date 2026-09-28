@@ -87,8 +87,7 @@ export class EntradasService {
       .insert(filasButacas);
 
     if (errorButacas) {
-      // Rollback manual: Supabase no soporta transacciones multi-tabla desde el cliente,
-      // así que si falló acá, borramos la entrada recién creada para no dejarla huérfana
+      // Rollback manual
       await this.supabaseService.client.from('entradas').delete().eq('id', entrada.id);
       return { pdfBlob: null, error: 'Una de las butacas seleccionadas ya fue vendida. Volvé a intentar.' };
     }

@@ -1,0 +1,113 @@
+// ============================================================
+// VALIDADOR DE QR (empleado)
+// ============================================================
+
+:host {
+  display: block;
+  padding: 2rem;
+  max-width: 560px;
+}
+
+.ayuda {
+  color: var(--color-texto-tenue);
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+.lector {
+  margin-bottom: 1.5rem;
+}
+
+// El visor mide lo que el video; en celular se adapta al ancho
+.visor-camara {
+  width: 100%;
+  max-width: 360px;
+  margin-top: 1rem;
+  border-radius: var(--radio-medio);
+  overflow: hidden;
+  border: 1px solid var(--color-borde);
+}
+
+.buscador-codigo {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+
+  input {
+    flex: 1;
+    min-width: 200px;
+  }
+}
+
+.mensaje {
+  color: var(--color-verde-butaca);
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.resultado-validacion {
+  background: var(--color-fondo-superficie);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-medio);
+  padding: 1.5rem;
+
+  h2 {
+    margin-bottom: 0.4rem;
+  }
+
+  h3 {
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    font-size: 1rem;
+  }
+
+  p {
+    color: var(--color-texto-tenue);
+  }
+}
+
+.error-validacion {
+  color: #e08585;
+  font-weight: 600;
+}
+
+.ya-validado {
+  color: #e08585;
+  font-weight: 600;
+}
+
+.boton-confirmar {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.lista-productos {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--color-borde);
+    font-size: 0.9rem;
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+}
+
+.boton-chico {
+  padding: 0.35rem 0.7rem;
+  font-size: 0.8rem;
+}
+
+@media (max-width: 480px) {
+  :host {
+    padding: 1.25rem;
+  }
+}

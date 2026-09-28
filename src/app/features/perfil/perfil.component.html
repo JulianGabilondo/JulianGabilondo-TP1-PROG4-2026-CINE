@@ -26,12 +26,18 @@
       >
         Mis películas
       </button>
+      <button
+        [class.activo]="pestanaActiva() === 'canjes'"
+        (click)="cambiarPestana('canjes')"
+      >
+        Mis puntos
+      </button>
     </nav>
 
     @if (pestanaActiva() === 'entradas') {
       <section class="lista-entradas">
         @for (entrada of misEntradas(); track entrada.id) {
-          <article class="entrada" [class.cancelada]="entrada.cancelada">
+          <article class="entrada">
             <img [src]="entrada.peliculaImagen" [alt]="entrada.peliculaTitulo">
             <div class="info-entrada">
               <h3>{{ entrada.peliculaTitulo }}</h3>
@@ -39,9 +45,7 @@
               <p>Butacas: {{ entrada.butacas.join(', ') }}</p>
               <p>Total: ${{ entrada.total }}</p>
 
-              @if (entrada.cancelada) {
-                <span class="badge cancelada">Cancelada</span>
-              } @else if (entrada.qr_validado) {
+              @if (entrada.qr_validado) {
                 <span class="badge validada">Usada</span>
               } @else if (puedeCancelarse(entrada)) {
                 <button
@@ -77,6 +81,23 @@
           </article>
         } @empty {
           <p>Todavía no viste ninguna película (o no se validó ninguna entrada).</p>
+        }
+      </section>
+    }
+
+    @if (pestanaActiva() === 'canjes') {
+      <section class="lista-canjes">
+        <p class="resumen-puntos">Tenés <strong>{{ perfil.puntos_acumulados }}</strong> puntos disponibles.</p>
+
+        @for (canje of misCanjes(); track canje.id) {
+          <article class="canje">
+            <span class="descripcion-canje">
+              {{ canje.productoNombre ? canje.productoNombre : 'Entrada gratis' }}
+            </span>
+            <span class="puntos-canje">−{{ canje.puntosUsados }} pts</span>
+          </article>
+        } @empty {
+          <p class="sin-datos">Todavía no canjeaste puntos por nada.</p>
         }
       </section>
     }

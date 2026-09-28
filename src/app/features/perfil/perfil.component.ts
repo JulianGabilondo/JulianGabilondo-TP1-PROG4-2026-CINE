@@ -1,9 +1,11 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { AuthService } from '../../core/services/auth.service';
+import { Router } from '@angular/router';
 import { MisEntradasService, EntradaUsuario } from '../../core/services/mis-entradas.service';
 import { MisPeliculasService, PeliculaVista } from '../../core/services/mis-peliculas.service';
+import { CanjesService, CanjeConDetalle } from '../../core/services/canjes.service';
 
-type PestanaPerfil = 'entradas' | 'peliculas';
+type PestanaPerfil = 'entradas' | 'peliculas' | 'canjes';
 
 @Component({
   selector: 'app-perfil',
@@ -17,6 +19,7 @@ export class PerfilComponent implements OnInit {
 
   misEntradas = signal<EntradaUsuario[]>([]);
   misPeliculas = signal<PeliculaVista[]>([]);
+  misCanjes = signal<CanjeConDetalle[]>([]); // SPRINT: historial de puntos canjeados
 
   cancelandoId = signal<number | null>(null);
   mensaje = signal<string | null>(null);
@@ -24,17 +27,21 @@ export class PerfilComponent implements OnInit {
   constructor(
     public authService: AuthService,
     private misEntradasService: MisEntradasService,
-    private misPeliculasService: MisPeliculasService
+    private misPeliculasService: MisPeliculasService,
+    private canjesService: CanjesService,
+    private router: Router
   ) {}
 
   async ngOnInit() {
     await this.cargarEntradas();
     this.misPeliculas.set(await this.misPeliculasService.obtenerMisPeliculas());
+    this.misCanjes.set(await this.canjesService.obtenerMisCanjes());
   }
 
   private async cargarEntradas() {
-    this.misEntradas.set(await this.misEntradasService.obtenerMisEntradas());
-  }
+  const todas = await this.misEntradasService.obtenerMisEntradas();
+  this.misEntradas.set(todas.filter(e => !e.cancelada));
+}
 
   cambiarPestana(p: PestanaPerfil) {
     this.pestanaActiva.set(p);
@@ -60,7 +67,9 @@ export class PerfilComponent implements OnInit {
     await this.cargarEntradas();
   }
 
-  cerrarSesion() {
-    this.authService.logout();
+   async cerrarSesion() {
+    await this.authService.logout();
+    this.router.navigate(['/']);
+
   }
 }
