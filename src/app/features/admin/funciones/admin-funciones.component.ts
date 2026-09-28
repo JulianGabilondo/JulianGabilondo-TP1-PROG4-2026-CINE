@@ -1,4 +1,4 @@
-import { Component, OnInit, signal, computed, inject } from '@angular/core';
+import { Component, OnInit, signal, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PeliculasService, Pelicula } from '../../../core/services/peliculas.service';
 import { FuncionesAdminService, FuncionAdmin } from '../../../core/services/funciones-admin.service';
@@ -13,8 +13,6 @@ import { Sala } from '../../../models/sala.model';
   styleUrl: './admin-funciones.component.scss'
 })
 export class AdminFuncionesComponent implements OnInit {
-  // inject() en vez de constructor injection: se resuelve antes de que
-  // se evalúen los campos de clase, así form.get de abajo no falla
   private fb = inject(FormBuilder);
 
   peliculas = signal<Pelicula[]>([]);
@@ -33,11 +31,6 @@ export class AdminFuncionesComponent implements OnInit {
     precioVip: [2200, [Validators.required, Validators.min(0)]]
   });
 
-  peliculaSeleccionada = computed(() => {
-    const id = this.form.get('peliculaId')?.value;
-    return this.peliculas().find(p => p.id === id) ?? null;
-  });
-
   constructor(
     private peliculasService: PeliculasService,
     private funcionesAdminService: FuncionesAdminService,
@@ -51,22 +44,33 @@ export class AdminFuncionesComponent implements OnInit {
     await this.cargarFunciones();
   }
 
+  peliculaSeleccionada(): Pelicula | null {
+    const id = this.form.get('peliculaId')?.value;
+    return this.peliculas().find(p => p.id === id) ?? null;
+  }
+
   private async cargarFunciones() {
     this.funciones.set(await this.funcionesAdminService.listar());
   }
 
   async guardar() {
+    this.error.set(null);
+    this.exito.set(null);
+
+    // Antes este chequeo cortaba sin avisar; ahora el usuario ve por qué no pasó nada
     if (this.form.invalid) {
       this.form.markAllAsTouched();
+      this.error.set('Completá película, fecha, hora y precios antes de crear la función.');
       return;
     }
 
     const peli = this.peliculaSeleccionada();
-    if (!peli) return;
+    if (!peli) {
+      this.error.set('Elegí una película de la lista.');
+      return;
+    }
 
     this.guardando.set(true);
-    this.error.set(null);
-    this.exito.set(null);
 
     const valores = this.form.value;
 
